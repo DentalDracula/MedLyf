@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Find Doctors</title>
+  <link rel="stylesheet" href="finding_doctor_style.css">
+</head>
+<body>
+  <img id="image"src="white logo no bg.png">
+
+  <form id="search"> 
+    <h1>
+      Find Doctors Near You
+    </h1>
+    <label for="location">Location:</label>
+    <select id="location" required>
+      <option value="">Select location</option>
+      <option value="vellore">vellore</option>
+    </select>
+
+    <label for="requirement">Requirement:</label>
+    <select id="requirement" required>
+      <option value="">Select requirement</option>
+      <option value="General">General</option>
+      <option value="Cardiology">Cardiology</option>
+      <option value="Dermatology">Dermatology</option>
+      <option value="Gynocologist">Gynocologist</option>
+      <option value="Dentist">Dentist</option>
+
+
+
+    </select>
+
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('search').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var location = document.getElementById('location').value;
+      var requirement = document.getElementById('requirement').value;
+
+      searchDoctors(location, requirement);
+    });
+
+    function searchDoctors(location, requirement) {
+      var resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
+
+      var doctors = [
+        { name: 'Dr. Babita', specialty: 'General', location: 'vellore' },
+        { name: 'Dr. Riya Sharma', specialty: 'Cardiology', location: 'vellore' },
+        { name: 'Dr. Ananya Rathi', specialty: 'Dermatology', location: 'vellore' },
+        { name: 'Dr. Arnav Singhal', specialty: 'General', location: 'vellore' },
+        { name: 'Dr. Ayush kumar', specialty: 'Dermatology', location: 'vellore' },
+        { name: 'Dr. Sameer kumar', specialty: 'Dentist', location: 'vellore' },
+        { name: 'Dr. Paarth ', specialty: 'Gynocologist', location: 'vellore' },
+        { name: 'Dr. Ayush kumar', specialty: 'Dentist', location: 'vellore' },
+        { name: 'Dr. Sonia', specialty: 'Dermatology', location: 'vellore' },
+        { name: 'Dr. Modi', specialty: 'Cardiology', location: 'vellore' },
+      ];
+
+      var filteredDoctors = doctors.filter(function(doctor) {
+        return doctor.location === location && doctor.specialty === requirement;
+      });
+
+      if (filteredDoctors.length > 0) {
+        var ul = document.createElement('ul');
+
+        filteredDoctors.forEach(function(doctor) {
+          var li = document.createElement('li');
+          li.textContent = 'Name: ' + doctor.name + ', Specialty: ' + doctor.specialty + ', Location: ' + doctor.location;
+          ul.appendChild(li);
+        });
+
+        resultDiv.appendChild(ul);
+      } else {
+        var message = document.createElement('p');
+        message.textContent = 'No doctors available for the selected location and requirement.';
+        resultDiv.appendChild(message);
+      }
+    }
+  </script>
+</body>
+</html>
